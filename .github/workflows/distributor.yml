@@ -1,0 +1,33 @@
+name: Wayback Archiver Distributor
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+
+jobs:
+  github:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - uses: wabarc/distributor@main
+        name: Distribute to GitHub
+        env:
+          DISTRIBUTE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          #DISTRIBUTE_OWNER: ${{ secrets.DISTRIBUTE_OWNER }}
+          #DISTRIBUTE_REPO: ${{ secrets.DISTRIBUTE_REPO }}
+          DISTRIBUTE_CHANNEL: ${{ secrets.DISTRIBUTE_CHANNEL }}
+          DISTRIBUTE_LIMIT: ${{ secrets.DISTRIBUTE_LIMIT }}
+          DISTRIBUTE_CMD: 'github'
+  duty-machine:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - uses: wabarc/distributor@main
+        name: Distribute to duty-machine
+        env:
+          DISTRIBUTE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          #DISTRIBUTE_OWNER: ${{ secrets.DISTRIBUTE_OWNER }}
+          #DISTRIBUTE_REPO: ${{ secrets.DISTRIBUTE_REPO }}
+          DISTRIBUTE_CHANNEL: ${{ secrets.DISTRIBUTE_CHANNEL }}
+          DISTRIBUTE_LIMIT: ${{ secrets.DISTRIBUTE_LIMIT }}
+          DISTRIBUTE_CMD: 'duty-machine'
